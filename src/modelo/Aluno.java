@@ -1,12 +1,14 @@
 package modelo;
 
-public class Aluno {
-    private int cpf;
-    private String nome;
-    private Data dataNasc;
-    private float peso, altura;
+import java.sql.Date;
 
-    public Aluno(int cpf, String nome, Data dataNasc, float peso, float altura) {
+public class Aluno {
+    private String cpf, nome;
+    private float peso;
+    private int altura;
+    private Date dataNasc;
+
+    public Aluno(String cpf, String nome, Date dataNasc, float peso, int altura) {
         this.cpf = cpf;
         this.nome = nome;
         this.dataNasc = dataNasc;
@@ -14,7 +16,7 @@ public class Aluno {
         this.altura = altura;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
@@ -22,7 +24,7 @@ public class Aluno {
         return nome;
     }
 
-    public Data getDataNasc() {
+    public Date getDataNasc() {
         return dataNasc;
     }
 
@@ -30,11 +32,11 @@ public class Aluno {
         return peso;
     }
 
-    public float getAltura() {
+    public int getAltura() {
         return altura;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
@@ -42,7 +44,7 @@ public class Aluno {
         this.nome = nome;
     }
 
-    public void setDataNasc(Data dataNasc) {
+    public void setDataNasc(Date dataNasc) {
         this.dataNasc = dataNasc;
     }
 
@@ -50,7 +52,7 @@ public class Aluno {
         this.peso = peso;
     }
 
-    public void setAltura(float altura) {
+    public void setAltura(int altura) {
         this.altura = altura;
     }
 }
