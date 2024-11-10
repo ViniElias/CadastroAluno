@@ -30,9 +30,10 @@ public class AlunoGUI extends javax.swing.JFrame {
         campoAltura = new javax.swing.JTextField();
         campoPeso = new javax.swing.JTextField();
         Cadastrar = new javax.swing.JButton();
+        Pesquisar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocation(new java.awt.Point(650, 150));
+        setLocation(new java.awt.Point(450, 150));
         setMinimumSize(new java.awt.Dimension(318, 509));
         setResizable(false);
         setSize(new java.awt.Dimension(318, 509));
@@ -103,6 +104,14 @@ public class AlunoGUI extends javax.swing.JFrame {
             }
         });
 
+        Pesquisar.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+        Pesquisar.setText("Pesquisar");
+        Pesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PesquisarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -132,7 +141,9 @@ public class AlunoGUI extends javax.swing.JFrame {
                         .addComponent(campoData, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(Pesquisar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Cadastrar)
                 .addContainerGap())
         );
@@ -160,7 +171,9 @@ public class AlunoGUI extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(campoAltura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
-                .addComponent(Cadastrar)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Cadastrar)
+                    .addComponent(Pesquisar))
                 .addContainerGap())
         );
 
@@ -263,7 +276,7 @@ public class AlunoGUI extends javax.swing.JFrame {
         
         else {
             AlunoDAO dao = new AlunoDAO();
-            dao.adiciona(aluno);
+            dao.adicionarAluno(aluno);
             JOptionPane.showMessageDialog(null, "Aluno " + campoNome.getText() + " inserido com sucesso!");
             
             campoNome.setText(""); 
@@ -273,6 +286,11 @@ public class AlunoGUI extends javax.swing.JFrame {
             campoAltura.setText("");
         }
     }//GEN-LAST:event_CadastrarActionPerformed
+    
+    private void PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarActionPerformed
+        Tela2 tela2 = new Tela2();
+        tela2.setVisible(true);
+    }//GEN-LAST:event_PesquisarActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -307,6 +325,7 @@ public class AlunoGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cadastrar;
+    private javax.swing.JButton Pesquisar;
     private javax.swing.JTextField campoAltura;
     private javax.swing.JTextField campoCpf;
     private javax.swing.JTextField campoData;
