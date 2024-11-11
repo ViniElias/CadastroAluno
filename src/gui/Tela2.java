@@ -38,6 +38,7 @@ public class Tela2 extends javax.swing.JFrame {
         Pesquisar = new javax.swing.JButton();
         Atualizar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(800, 150));
@@ -45,7 +46,7 @@ public class Tela2 extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Trebuchet MS", 0, 24)); // NOI18N
         jLabel1.setText("Controle de alunos");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Insira um CPF", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Trebuchet MS", 0, 16))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Insira um CPF", 0, 0, new java.awt.Font("Trebuchet MS", 0, 16))); // NOI18N
 
         campoAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,12 +64,25 @@ public class Tela2 extends javax.swing.JFrame {
 
         Pesquisar.setFont(new java.awt.Font("Trebuchet MS", 0, 16)); // NOI18N
         Pesquisar.setText("Pesquisar");
+        Pesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PesquisarActionPerformed(evt);
+            }
+        });
 
         Atualizar.setFont(new java.awt.Font("Trebuchet MS", 0, 16)); // NOI18N
         Atualizar.setText("Atualizar");
+        Atualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AtualizarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
-        jLabel2.setText("Selecione abaixo o que fazer com o aluno digitado.");
+        jLabel2.setText("Para pesquisar os alunos, digite um nome. ");
+
+        jLabel3.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jLabel3.setText("Para excluir um registro, digite um cpf.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -82,11 +96,13 @@ public class Tela2 extends javax.swing.JFrame {
                         .addComponent(Pesquisar)
                         .addGap(50, 50, 50)
                         .addComponent(Atualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                         .addComponent(Excluir))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 44, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -96,7 +112,9 @@ public class Tela2 extends javax.swing.JFrame {
                 .addComponent(campoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Excluir)
                     .addComponent(Pesquisar)
@@ -152,6 +170,37 @@ public class Tela2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ExcluirActionPerformed
 
+    private void PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarActionPerformed
+        Aluno aluno = new Aluno(null, null, null, 0, 0);
+        aluno.setNome(campoAluno.getText());
+        
+        if(campoAluno.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha o campo.");
+        } else if(!campoAluno.getText().matches("[A-Za-zÀ-ÖØ-öø-ÿ\\s]+")){
+            JOptionPane.showMessageDialog(null, "Entrada inválida.");
+        } else {
+            AlunoDAO dao = new AlunoDAO();
+            dao.pesquisarAluno(aluno);
+        }
+    }//GEN-LAST:event_PesquisarActionPerformed
+
+    private void AtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarActionPerformed
+        Aluno aluno = new Aluno(null, null, null, 0, 0);
+        aluno.setCpf(campoAluno.getText());
+        String alunoStr = campoAluno.getText();
+        
+        if(alunoStr.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencha o campo.");
+            
+        } else if(!alunoStr.matches("\\d+") || alunoStr.length() != 11){
+            JOptionPane.showMessageDialog(null, "Entrada inválida.");
+            
+        } else {
+            AlunoDAO dao = new AlunoDAO();
+            dao.atualizarAluno(aluno);
+        }
+    }//GEN-LAST:event_AtualizarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -194,6 +243,7 @@ public class Tela2 extends javax.swing.JFrame {
     private javax.swing.JTextField campoAluno;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
