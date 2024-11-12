@@ -39,6 +39,7 @@ public class Tela2 extends javax.swing.JFrame {
         Atualizar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        CalcularIMC = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(800, 150));
@@ -46,7 +47,7 @@ public class Tela2 extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Trebuchet MS", 0, 24)); // NOI18N
         jLabel1.setText("Controle de alunos");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Insira um CPF", 0, 0, new java.awt.Font("Trebuchet MS", 0, 16))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Insira um CPF", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Trebuchet MS", 0, 16))); // NOI18N
 
         campoAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,7 +83,15 @@ public class Tela2 extends javax.swing.JFrame {
         jLabel2.setText("Para pesquisar os alunos, digite um nome. ");
 
         jLabel3.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
-        jLabel3.setText("Para excluir um registro, digite um cpf.");
+        jLabel3.setText("Para atualizar ou excluir um registro, digite um cpf.");
+
+        CalcularIMC.setFont(new java.awt.Font("Trebuchet MS", 0, 16)); // NOI18N
+        CalcularIMC.setLabel("Calcular IMC");
+        CalcularIMC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CalcularIMCActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -92,17 +101,19 @@ public class Tela2 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(campoAluno)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(Pesquisar)
-                        .addGap(50, 50, 50)
-                        .addComponent(Atualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                        .addComponent(Excluir))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Pesquisar)
+                        .addGap(35, 35, 35)
+                        .addComponent(Atualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addComponent(Excluir)
+                        .addGap(35, 35, 35)
+                        .addComponent(CalcularIMC)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -114,11 +125,12 @@ public class Tela2 extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Excluir)
                     .addComponent(Pesquisar)
-                    .addComponent(Atualizar))
+                    .addComponent(Atualizar)
+                    .addComponent(CalcularIMC))
                 .addContainerGap())
         );
 
@@ -197,9 +209,32 @@ public class Tela2 extends javax.swing.JFrame {
             
         } else {
             AlunoDAO dao = new AlunoDAO();
-            dao.atualizarAluno(aluno);
+            Aluno alunoEncontrado = dao.buscarAlunoPorCpf(aluno);
+        
+            if (alunoEncontrado != null) {
+                AlunoGUI gui = new AlunoGUI();
+                gui.setCampoNome(alunoEncontrado.getNome());
+                gui.setCampoData(alunoEncontrado.getDataNasc().toString());
+                gui.setCampoPeso(String.valueOf(alunoEncontrado.getPeso()));
+                gui.setCampoAltura(String.valueOf(alunoEncontrado.getAltura()));
+
+                gui.setVisible(true);
+            }
         }
     }//GEN-LAST:event_AtualizarActionPerformed
+
+    private void CalcularIMCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalcularIMCActionPerformed
+        String cpf = campoAluno.getText();
+
+        if (cpf.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha o campo.");
+        } else if (!cpf.matches("\\d{11}")) {
+            JOptionPane.showMessageDialog(null, "Entrada inválida..");
+        } else {
+            AlunoDAO dao = new AlunoDAO();
+            dao.calcularImc(cpf);
+        }
+    }//GEN-LAST:event_CalcularIMCActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,6 +273,7 @@ public class Tela2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Atualizar;
+    private javax.swing.JButton CalcularIMC;
     private javax.swing.JButton Excluir;
     private javax.swing.JButton Pesquisar;
     private javax.swing.JTextField campoAluno;

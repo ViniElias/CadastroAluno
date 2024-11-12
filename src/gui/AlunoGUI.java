@@ -277,7 +277,6 @@ public class AlunoGUI extends javax.swing.JFrame {
         else {
             AlunoDAO dao = new AlunoDAO();
             dao.adicionarAluno(aluno);
-            JOptionPane.showMessageDialog(null, "Aluno " + campoNome.getText() + " inserido com sucesso!");
             
             campoNome.setText(""); 
             campoCpf.setText("");
@@ -290,6 +289,7 @@ public class AlunoGUI extends javax.swing.JFrame {
     private void PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarActionPerformed
         Tela2 tela2 = new Tela2();
         tela2.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_PesquisarActionPerformed
 
     public static void main(String args[]) {
@@ -321,6 +321,22 @@ public class AlunoGUI extends javax.swing.JFrame {
                 new AlunoGUI().setVisible(true);
             }
         });
+    }
+    
+    public void setCampoNome(String nome) {
+        this.campoNome.setText(nome);   
+    }
+    
+    public void setCampoData(String data) {
+        this.campoData.setText(data);
+    }
+    
+    public void setCampoPeso(String peso) {
+        this.campoPeso.setText(peso);
+    }
+
+    public void setCampoAltura(String altura) {
+        this.campoAltura.setText(altura);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
